@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Non-monotonic flow curves and vorticity banding in shear thickening suspensions</title>
+
+		<meta name="description" content="Shear thickening">
+		<meta name="author" content="Romain Mari">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<!-- <script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["AMSmath.js"] }});
+		</script>
+		<script type="text/javascript" src="/usr/share/javascript/mathjax/MathJax.js"></script> -->
+		<style>
+		div.ref {
+			position: absolute;
+			top: 80px;
+			right: 0px;
+			font-size: 50%;
+			text-align: right;
+		}
+
+		div.relref {
+			position: relative;
+			top: 0px;
+			right: 0px;
+			font-size: 50%;
+			/*text-align: right;*/
+		}
+
+		div.affil {
+			position: relative;
+			top: 10px;
+			font-size: 70%;
+		}
+
+		p.vertical {
+			transform: rotate(270deg);
+			/*transform-origin: left top 0;*/
+		}
+		/*http://stackoverflow.com/questions/30861845/how-to-use-two-column-layout-with-reveal-js*/
+
+		div.cleft {
+			text-align: left;
+			float: left;
+			width: 46%;
+			z-index: -10;
+		}
+
+		div.cleft3 {
+			text-align: left;
+			float: left;
+			width: 33.3%;
+			z-index: -10;
+		}
+
+		div.cright {
+			float: right;
+			text-align: left;
+			z-index: -10;
+			width: 46%;
+		}
+
+		div.cright3 {
+			float: right;
+			text-align: left;
+			z-index: -10;
+			width: 33.3%;
+		}
+
+		div.cctr3 {
+			float: left;
+			text-align: left;
+			z-index: -10;
+			width: 33.3%;
+		}
+
+		h3.title {
+			font-size: 48px;
+			top: 0%;
+			width: 1000px;
+			height: 40px;
+			text-align: center;
+		}
+
+		img.abs {
+			position: absolute;
+			height: auto;
+			width: auto;
+			border: 0px;
+		}
+	</style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h3 style="position: relative; top: 0px;">Vorticity banding in shear thickening suspensions</h3>
+					<div style="position: relative; top: 0px; font-size: 80%">
+						<p>Romain Mari<br>
+							<span style="font-size: 70%">
+								Laboratoire Interdisciplinaire de Physique, CNRS-Université Grenoble-Alpes
+							</span>
+						</p>
+						<div style="position: absolute; left: 9%; top: 150px;">
+							<img src="img/Rahul.jpg"
+									style="position: relative; top: 0px; max-height: 130px; border: 0px;">
+							<div style="position: relative; top: -20px;">
+								Rahul Chacko<br>
+								<span style="font-size: 70%; position: relative; top:-5px; left: 100px;">
+									Dept. of Physics, Durham
+								</span>
+							</div>
+						</div>
+						<div style="position: absolute; left: 34%; top: 150px;">
+							<img src="img/Suzanne.gif"
+									style="position: relative; top: 0px; max-height: 130px; border: 0px;">
+							<div style="position: relative; top: -20px;">
+								Suzanne Fielding
+							</div>
+						</div>
+						<div style="position: absolute; left: 70%; top: 150px;">
+							<img src="img/Mike.jpg"
+									style="position: relative; top: 0px; max-height: 130px; border: 0px;">
+							<div style="position: relative; top: -20px;">
+								Mike Cates<br>
+								<span style="font-size: 70%; position: relative; top:-5px;">
+									DAMTP, Cambridge
+								</span>
+							</div>
+						</div>
+				</div>
+				</section>
+
+				<section>
+					<h3 class="title">Shear thickening</h3>
+					<div class="container" style="height: 400px;">
+						<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 10px;">
+							<div class="relref" style="font-size: 70%">[Cwalina & Wagner, JOR 2014]</div>
+							<p style="position: relative; top: -20px;">260nm silica + polymer brush <br> in PEG 200</p>
+						<img src="img/Cwalina_JOR.png"
+								style="position: relative; top: -40px; max-width: 350px; border: 0px;">
+						</div>
+							<div class="cright" style="position: relative; font-size:70%; left: 40px; top: 10px;">
+								<div class="relref" style="font-size: 70%">[Egres & Wagner, JOR 2005]</div>
+							~500nm calcium carbonate <br>+ polymer brush in PEG 200
+							<img src="img/Egres_thickening_calcium_carbonate.png"
+								style="position: relative; top: 0px; max-width: 340px; border: 0px;">
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3 class="title">Shear thickening</h3>
+					<ul style="position: absolute; top: 160px; left: 50%; width: 960px; margin-left: -450px;">
+						<li>Newtonian suspending fluid</li>
+						<li>Hard particles</li>
+						<li>Size $100nm-100\mu m$</li>
+						<li>Brownian motion not necessary</li>
+						<li>Inertia is not involved (Stokes flow)</li>
+						<li>Stabilized (=short-range repulsion)</li>
+					</ul>
+				</section>
+				<section>
+					<h3 class="title">Suspensions of hard particles</h3>
+						<p style="top: 80px;">Rate independent rheology</p>
+						<img src="img/jamming_viscosity_1.png" style="position: relative; top: -40px; left:30px; max-width:1000px; max-height:1000px; border:0px; box-shadow: none;">
+				</section>
+				<section>
+					<h3 class="title">Suspensions of hard particles</h3>
+						<p style="top: 80px;">Rate independent rheology</p>
+						<img src="img/jamming_viscosity_2.png" style="position: relative; top: -38px; left:28px; max-width:1000px; max-height:1000px; border:0px; box-shadow: none;">
+						<p style="position: relative; top: -50px;">But it depends on friction</p>
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario</h3>
+
+					<img src="img/scenario_0.png" class="abs" style="top: 60px; left: 50px; max-height: 250px; border: 0px; box-shadow: none;">
+					<img src="img/frictionless.png" class="abs" style="top: 320px; left:70px; max-height: 320px; border-style: solid; border-color: blue; border-width: 5px; box-shadow: none;">
+					<img src="img/frictional.png" class="abs" style="top: 320px; right:70px; max-height: 320px; border-style: solid; border-color: #ff0000; border-width: 5px; box-shadow: none;">
+					<div style="position: relative; top:-380px; left: 150px; width: 150px; background: white; font-size:60%; border-style: solid; border-color: black; border-width: 1px;">no contacts</div>
+					<div style="position: relative; top:-415px; left: 508px; width: 150px; background: white; font-size:60%; border-style: solid; border-color: black; border-width: 1px;">contacts</div>
+					<div class="ref">
+						[Fernandez et al, PRL 2013]<br>
+						[Seto et al, PRL 2013]<br>
+						[Heussinger, PRE 2013]<br>
+						[Wyart and Cates PRL 2013]<br>
+						[Mari et al, JOR 2014]
+					</div>
+				</section>
+				<section data-markdown>
+    			<script type="text/template">
+					<h3 class="title">Stabilization = soft repulsion</h3>
+						<img src="img/repulsion_cartoon.png" class="abs" style="top: 200px; left:30px; max-width:1000px; max-height:1000px; border:0px; box-shadow: none;">
+						<div style="position: absolute; top: 20px; left:350px; right: 50px;"
+						$F_{\mathrm{R}} = F^{\ast} f(h)$, amplitude $F^{\ast}$ <br><br><br><br>
+						<p>Small stresses $\sigma \ll F^{\ast}/a^{2}$, <br>no contacts</p>
+						<p>Large stresses $\sigma \gg F^{\ast}/a^{2}$, <br>many contacts</p>
+						</div>
+					</script>
+				</section>
+				<section>
+					<h3 class="title">Numerical simulations, rate controlled</h3>
+					<div class="ref">
+						[Seto et al, PRL 2013]<br>
+						[Mari et al, JOR 2014]
+					</div>
+					<img src="img/visc_vs_rate_NB.svg" class="abs" style="left: 50%; margin-left: -225px; top: 160px; border:0px; max-width:450px;max-height:450px">
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario (2)</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<img src="img/eta_vs_phi_thickening_CST.svg" class="abs" style="top: 70px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<img src="img/CST_gamma_sigma_sketch.svg" class="abs" style="top: 350px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<div  style="position: absolute; top: 400px; right: 3%;">Continuous Shear Thickening</div>
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario (2)</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<img src="img/eta_vs_phi_thickening_CST_steep.svg" class="abs" style="top: 70px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<img src="img/CST_steep_gamma_sigma_sketch.svg" class="abs" style="top: 350px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<div  style="position: absolute; top: 400px; right: 3%;">Continuous Shear Thickening</div>
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario (2)</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<img src="img/eta_vs_phi_thickening_DST.svg" class="abs" style="top: 70px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<img src="img/DST_gamma_sigma_sketch.svg" class="abs" style="top: 350px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<div  style="position: absolute; top: 400px; right: 3%;">Discontinuous Shear Thickening</div>
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario (2)</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<img src="img/eta_vs_phi_thickening_DST_deep.svg" class="abs" style="top: 70px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<img src="img/DST_deep_gamma_sigma_sketch.svg" class="abs" style="top: 350px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<div  style="position: absolute; top: 400px; right: 3%;">Discontinuous Shear Thickening</div>
+				</section>
+				<section>
+					<h3 class="title">Thickening scenario (2)</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<img src="img/eta_vs_phi_thickening_SJ.svg" class="abs" style="top: 70px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<img src="img/SJ_gamma_sigma_sketch.svg" class="abs" style="top: 350px; left: 5%; max-height: 350px; border:0px; box-shadow: none;">
+					<div  style="position: absolute; top: 400px; right: 3%;">Shear Jamming</div>
+				</section>
+				<section>
+					<h3 class="title">Stress-controlled simulations</h3>
+					<div class="ref">
+						[Mari, Seto, Morris & Denn, PRE 2015]
+					</div>
+					<img src="img/rate_vs_stress_PRE.png" class="abs" style="left: 10%; top: 130px; border:0px; max-height:250px;">
+					<img src="img/viscosity_vs_rate_PRE.png" class="abs" style="right: 10%; top: 130px; border:0px; max-height:250px;">
+					<div style="position: absolute; width:700px; text-align: left; left: 100px; top: 450px;">
+						Non-monotonic flow curves:
+						<ul>
+							<li>S-shaped (discontinuous thickening)</li>
+							<li>Arches (shear jamming)</li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Wyart-Cates model</h3>
+					<div class="ref">[Wyart & Cates, PRL 2014]</div>
+					<div style="font-size:75%; position: relative; top: 30px;">
+						<p>"Minimal constitutive model" with qualitative features of ST:</p>
+						<div class="cleft" style="height: 250px;">
+							<p>
+								$\sigma = \eta \dot\gamma$<br>
+								$\eta(\phi, f) = \eta_0(\phi_\mathrm{J}(f)-\phi)^{-2}$<br>
+								$\phi_J(f) = f\phi_\mathrm{J}^{\mu} + (1-f)\phi_\mathrm{J}^0$ <br>
+								$f = f(\sigma)$
+							</p>
+						</div>
+						<div class="cright" style="height: 250px;width: 50%">
+							<p style="position:relative; top:0px;">
+								$f$: "fraction of frictional contacts"<br>
+								$f=0$: only lubricated contacts<br>
+								$f=1$: only frictional contacts
+							</p>
+						</div>
+						<div class="fragment">
+							<div class="cleft">
+								<p>
+									In practice, $f(\sigma) \approx \exp(-C\sigma^{\ast}/\sigma)$
+								</p>
+							</div>
+							<div class="cright" style="width: 50%">
+								<img src="img/fofsigma_simu.png" style="position: relative; top: -30px; left: 0px; border:0px; max-width:360px;">
+							</div>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Wyart-Cates model</h3>
+					<div class="ref">[Singh et al, 2017]</div>
+					<p style="position: relative; top: 40px;"> Comparison with simulations</p>
+					<img src="img/WC_comparison_simu.png" style="position: relative; top: 40px; left: 0px; border:0px; max-width:800px;">
+				</section>
+				<section>
+					<h3 class="title">Flow instabilities</h3>
+					<div class="container">
+						<div class="cleft" style="position: relative; top: 30px; font-size:80%; text-align:right;">
+							Stress-controlled<br> uniform flow curves
+							<div class="fragment">
+								<div style="position: relative; top: 200px;">
+									<p>Uniform flow unstable</p>
+								</div>
+							</div>
+						</div>
+						<div class="cright">
+							<img src="img/rate_vs_stress_PRE.png" style="border:0px; max-width:320px;">
+							<div class="fragment">
+								<div class="relref">
+									[Hermes et al, 2015]
+								</div>
+								<img src="img/ST_instability_Hermes.png" style="max-height: 350px; border:0px;">
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3 class="title">Steady gradient banding</h3>
+					<div class="container" style="height: 400px;">
+						<div class="cleft" style="position: relative; left: 5%; top: 30px;">
+							<img src="img/gradient_band.png"
+								style="position: relative; left: 130px; top: 0px; max-width: 230px; border: 0px; box-shadow: none;">
+						</div>
+						<div class="cright" style="position: relative; font-size:70%; left: 40px; top: 30px;">
+							At the interface:<br>
+								$\sigma^{(1)}_{xy} = \sigma^{(2)}_{xy}$<br>
+								$p^{(1)}_{yy} = p^{(2)}_{yy}$
+							<div class="fragment">
+								<img src="img/steady_shear_banding_1.png"
+									style="position: relative; left: 0px; top: 50px; max-width: 350px; border: 0px; box-shadow: none;">
+							</div>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Steady gradient banding</h3>
+					<div class="container" style="height: 400px;">
+						<div class="cleft" style="position: relative; left: 5%; top: 30px;">
+							<img src="img/gradient_band.png"
+								style="position: relative; left: 130px; top: 0px; max-width: 230px; border: 0px; box-shadow: none;">
+						</div>
+						<div class="cright" style="position: relative; font-size:70%; left: 40px; top: 30px;">
+							At the interface:<br>
+								$\sigma^{(1)}_{xy} = \sigma^{(2)}_{xy}$<br>
+								$p^{(1)}_{yy} = p^{(2)}_{yy}$
+								<img src="img/steady_shear_banding_2.png"
+									style="position: relative; left: 0px; top: 50px; max-width: 350px; border: 0px; box-shadow: none;">
+								<div class="fragment">
+									<div class="relref" style="top: -230px;">[Dong & Trulsson, Phys. Rev. Fluids 2017]</div>
+									<img src="img/mu_of_J_thickening_Dong_Trulsson.png"
+									style="position: relative; left: 0px; top: -240px; max-width: 350px; border: 0px; box-shadow: none;">
+									<div class="relref">[Dong & Trulsson, Phys. Rev. Fluids 2017]</div>
+								</div>
+
+						</div>
+					</div>
+					<div class="fragment">
+						<p style="position: relative; top: 30px;">
+							Impossible!
+						</p>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Steady vorticity banding</h3>
+					<div class="container" style="height: 400px;">
+						<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 30px;">
+							<img src="img/vorticity_band.png"
+								style="position: relative; left: 70px; top: 40px; max-width: 350px; border: 0px; box-shadow: none;">
+						</div>
+						<div class="cright" style="position: relative; font-size:70%; left: 40px; top: 30px;">
+							At the interface:<br>
+								$p^{(1)}_{zz} = p^{(2)}_{zz}$<br><br>
+								$\dot\gamma^{(1)} = \dot\gamma^{(2)}$
+								<div class="fragment">
+									<img src="img/steady_vorticity_banding.png"
+										style="position: relative; left: 0px; top: 50px; max-width: 350px; border: 0px; box-shadow: none;">
+								</div>
+						</div>
+					</div>
+					<div class="fragment">
+						<p style="position: relative; top: 30px;">
+							Impossible!
+						</p>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Banding and particle migration</h3>
+					<div class="container" style="height: 400px;">
+						<div style="position: relative; font-size:70%; left: 40px; top: 30px;">
+							<p>
+								Suspension balance model <span style="font-size: 80%">[Nott & Brady, JFM 1994]</span>:<br>
+								$\nabla \cdot \Sigma^{\mathrm{p}} = \phi R(\phi) (\mathbf{v}^{\mathrm{p}}-\mathbf{v}^{\mathrm{p+f}})$
+							</p>
+						</div>
+						<div style="position: relative; font-size:70%; left: 40px; top: 30px;">
+							<img src="img/suspension_balance.png"
+								style="max-width: 350px; border: 0px; box-shadow: none;">
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Vorticity instability model</h3>
+					<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 50px;">
+						<img src="img/vorticity_band.png"
+							style="position: relative; left: 0px; top: 0px; max-width: 320px; border: 0px; box-shadow: none;">
+						<p>
+							<b>Reducing the problem to 1d</b>
+							$\Sigma \to \sigma_{zz} \equiv \sigma$<br>
+							$\mathbf{v} \to v_{z} \equiv v$
+						</p>
+					</div>
+					<div class="fragment">
+						<div class="cright" style="position: relative; font-size: 62%; top: 20px;">
+							<p>
+								<b>Conservation relations</b><br>
+								Mass conservation:<br>
+								$\partial_t \phi + \partial_z(\phi v) = 0$<br>
+								Momentum conservation:<br>
+								$\partial_z \sigma = - R \phi v$<br>
+								Stress control:<br>
+								$L_z^{-1} \int dz\ \sigma  = \bar\sigma$
+							</p>
+							<div class="fragment">
+								<p>
+									<b>Constitutive model:</b><br>
+									Wyart-Cates + <span style="color: #026303">linear response</span>:<br>
+									$\sigma = \eta(\phi, f) \dot\gamma$
+									$\eta(\phi, f) = \eta_0(\phi_\mathrm{J}(f)-\phi)^{-2}$<br>
+									$\phi_J(f) = f\phi_\mathrm{J}^{\mu} + (1-f)\phi_\mathrm{J}^0$<br>
+									<span style="color: #026303">$\partial_t f = -\dot\gamma \gamma_0^{-1} \left[f - f^{\ast}(\sigma)\right]$</span><br>
+									$f^{\ast}(\sigma) = \exp(-\sigma^{\ast}/\sigma)$
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Linear response of the microstructure</h3>
+					<div class="ref">[Mari et al, PRE 2015]</div>
+					<img src="img/relax_strain.png"
+							style="position: relative; left: 0px; top: 30px; max-width: 600px; border: 0px; box-shadow: none;">
+				</section>
+				<section>
+					<h3 class="title">Vorticity instability model</h3>
+					<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 50px;">
+						<img src="img/vorticity_band.png"
+							style="position: relative; left: 0px; top: 0px; max-width: 320px; border: 0px; box-shadow: none;">
+						<p>
+							<b>Reducing the problem to 1d</b>
+							$\Sigma \to \sigma_{zz} \equiv \sigma$<br>
+							$\mathbf{v} \to v_{z} \equiv v$
+						</p>
+					</div>
+						<div class="cright" style="position: relative; font-size: 62%; top: 20px;">
+						<p>
+							<b>Conservation relations</b><br>
+							Mass conservation:<br>
+							$\partial_t \phi + \partial_z(\phi v) = 0$<br>
+							Momentum conservation:<br>
+							$\partial_z \sigma = - R \phi v$<br>
+							Stress control:<br>
+							$L_z^{-1} \int dz\ \sigma  = \bar\sigma$
+						</p>
+						<p>
+							<b>Constitutive model:</b><br>
+							Wyart-Cates + <span style="color: #026303">linear response</span>:<br>
+							$\sigma = \eta(\phi, f) \dot\gamma$
+							$\eta(\phi, f) = \eta_0(\phi_\mathrm{J}(f)-\phi)^{-2}$<br>
+							$\phi_J(f) = f\phi_\mathrm{J}^{\mu} + (1-f)\phi_\mathrm{J}^0$<br>
+							<span style="color: #026303">$\partial_t f = -\dot\gamma \gamma_0^{-1} \left[f - f^{\ast}(\sigma)\right]$</span><br>
+							$f^{\ast}(\sigma) = \exp(-\sigma^{\ast}/\sigma)$
+						</p>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Vorticity instability model</h3>
+					<div style="height: 400px;">
+						<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 50px;">
+							<img src="img/vorticity_band.png"
+								style="position: relative; left: 0px; top: 0px; max-width: 320px; border: 0px; box-shadow: none;">
+							<p>
+								<b>Reducing the problem to 1d</b>
+								$\Sigma \to \sigma_{zz} \equiv \sigma$<br>
+								$\mathbf{v} \to v_{z} \equiv v$
+							</p>
+						</div>
+						<div class="cright" style="position: relative; font-size: 62%; top: 50px;">
+							<p>
+								<b>Coupled dynamical equations</b><br>
+								$\partial_t \phi = R^{-1} \partial^2_z \sigma$<br>
+								$\partial_t f = -\dot\gamma \gamma_0^{-1} \left[f - f^{\ast}(\sigma)\right]$<br>
+							</p>
+							<p>
+								<b>Coupling through:</b><br>
+								$\sigma = \eta(\phi, f) \dot\gamma$<br>
+								$\eta(\phi, f) = \eta_0(\phi_\mathrm{J}(f)-\phi)^{-2}$<br>
+								$\phi_J(f) = f\phi_\mathrm{J}^{\mu} + (1-f)\phi_\mathrm{J}^0$<br>
+								$f^{\ast}(\sigma) = \exp(-\sigma^{\ast}/\sigma)$<br>
+								$L_z^{-1} \int dz\ \sigma  = \bar\sigma$
+							</p>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Vorticity instability model</h3>
+					<div style="height: 400px;">
+						<div class="cleft" style="position: relative; font-size:70%; left: 5%; top: 50px;">
+							<p>
+								Non-dimensionalize with units:
+								<ul>
+									<li> Time $\eta_0/\sigma^{\ast}$</li>
+									<li> Length $L_z$</li>
+									<li> Stress $\sigma^{\ast}$</li>
+								</ul>
+							</p>
+							<p>
+								Change of variables:
+								<ul>
+									<li>$t \to s=\gamma_0^{-1}t$</li>
+									<li>$R \to \alpha=\gamma_0^{-1}R$</li>
+								</ul>
+							</p>
+						</div>
+						<div class="fragment">
+							<div class="cright" style="position: relative; font-size: 62%; top: 50px;">
+								<p>
+									<b>Coupled dynamical equations</b><br>
+									$\partial_s \phi = \alpha^{-1} \partial^2_z \sigma$<br>
+									$\partial_s f = -\dot\gamma \left[f - f^{\ast}(\sigma)\right]$<br>
+								</p>
+								<p>
+									<b>Coupling through:</b><br>
+									$\sigma = \eta(\phi, f) \dot\gamma$<br>
+									$\eta(\phi, f) = (\phi_\mathrm{J}(f)-\phi)^{-2}$<br>
+									$\phi_J(f) = f\phi_\mathrm{J}^{\mu} + (1-f)\phi_\mathrm{J}^0$<br>
+									$f^{\ast}(\sigma) = \exp(-1/\sigma)$<br>
+									$\int dz\ \sigma  = \bar\sigma$
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="fragment">
+						<p style="position: relative; top: 30px; font-size: 75%;">
+							3 parameters: $\bar\phi$, $\bar\sigma$, $\alpha=L_z^{2}R/(\gamma_0 \eta_0)\gg 1$
+						</p>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Vorticity instability model</h3>
+					<div class="container" style="position: relative; height: 200px; top: 20px;">
+						<div class="cleft" style="position: relative; font-size: 70%; top: 10px;">
+							Linear stability analysis:<br>
+							$X = X_0 + \delta X e^{ikz + \lambda t}$
+							<p>
+								Unstable when
+								<span style="color: #e66565; font-size: 130%">$\eta \partial_{\sigma} \dot\gamma < -\frac{k^{2}}{\phi \alpha}\partial_{\phi}\eta$</span>
+							</p>
+						</div>
+						<div class="cright" style="position: relative; font-size: 70%; top: 0px;">
+							<img src="img/rate_vs_stress_PRE.png"
+								style="position: relative; left: 0px; top: 0px; max-width: 300px; border: 0px; box-shadow: none;">
+						</div>
+					</div>
+					<div class="fragment" style="position: absolute; top: 300px; height: 200px">
+					<div class="cleft" style="position: relative; font-size: 70%; top: 40px; width:50%">
+						<p>
+							Hopf bifurcation,
+							$\mathrm{Re} \lambda > 0$ and $\mathrm{Im} \lambda \neq 0$<br>
+							<br>
+							Instability towards <i>traveling bands</i>
+						</p>
+					</div>
+					<div class="cright" style="position: relative; font-size: 70%; top: 0px;">
+						<img src="img/instability_eigenvals.png"
+							style="position: relative; left: 110px; top: 20px; max-width: 300px; border: 0px; box-shadow: none;">
+					</div>
+				</div>
+				</section>
+				<section>
+					<h3 class="title">Traveling bands</h3>
+					<div class="cleft" style="position: relative; font-size: 70%; top: 80px;">
+						<img src="img/vim_flow_curve_s2.png"
+							style="position: relative; left: 130px; top: 50px; max-width: 330px; border: 0px;">
+					</div>
+					<div class="cright" style="position: relative; top: 40px;">
+						<img src="img/rate_vs_strain_1Band_model.png"
+							style="position: relative; left: 20px; top: 0px; max-width: 350px; border: 0px;">
+						<p style="font-size: 70%; position: relative; top: -10px"> Stress field along vorticity</p>
+						<video width=420 style="position: relative; top: -20px; left: 2%" controls loop>
+						 <source src="vid/1Band_model_stress.mp4" type="video/mp4" />
+						</video>
+					</div>
+				</section>
+				<section>
+					<video width=420 style="position: relative; top: -80px; left: 2%" controls loop>
+						 <source src="vid/1Band_model_all.mp4" type="video/mp4" />
+					</video>
+				</section>
+				<section>
+					<h3 class="title">Traveling bands</h3>
+					<div class="cleft" style="position: relative; font-size: 70%; top: 80px;">
+						<img src="img/vim_flow_curve_s5.png"
+							style="position: relative; left: 130px; top: 50px; max-width: 330px; border: 0px;">
+					</div>
+					<div class="cright" style="position: relative; top: 40px;">
+						<img src="img/rate_vs_strain_2Band_model.png"
+							style="position: relative; left: 20px; top: 0px; max-width: 350px; border: 0px;">
+						<p style="font-size: 70%; position: relative; top: -10px"> Stress field along vorticity</p>
+						<video width=420 style="position: relative; top: -20px; left: 2%" controls loop>
+						 <source src="vid/2Band_model_stress.mp4" type="video/mp4" />
+						</video>
+					</div>
+				</section>
+				<section>
+					<video width=420 style="position: relative; top: -80px; left: 2%" controls loop>
+						 <source src="vid/2Band_model_all.mp4" type="video/mp4" />
+					</video>
+				</section>
+				
+
+				<section>
+					<h3 class="title">"Stokesian dynamics" simulations</h3>
+					<div class="container" style="height:320px; font-size:80%; position: relative; top: 60px">
+						<div class="cleft" style="position: relative; left: 50px;">
+							<p style="position: relative; top: 0px;">
+								Instability for:
+								$\eta \partial_{\sigma} \dot\gamma < -\frac{k^{2} \gamma_0}{\phi \alpha}\partial_{\phi}\eta$
+							</p>
+							<p style="position: relative; top: 20px;">
+								Need $L_z/a \gtrsim 100$
+							</p>
+						</div>
+						<div class="cright" style="position: relative; left: 0px;">
+							<img src="img/rate_vs_stress_PRE.png" style="border:0px; max-width:400px;">
+						</div>
+					</div>
+					<p style="font-size: 80%; position: relative; top: 60px;">Simulations with very large aspect ratio in favor of the vorticity</p>
+				</section>
+				<section>
+					<h3 class="title">"Stokesian dynamics" simulations</h3>
+					<div class="container" style="height:220px;">
+						<div style="position: relative; top: 20px; font-size: 70%">
+							<p>Uniform flow curve</p>
+						</div>
+					</div>
+					<img src="img/flow_curve_phi0.58_PRE.png" style="border:0px; max-width:300px; position: absolute; left: 340px; top: 120px;">
+					<div class="fragment" style="font-size: 70%">
+						<div style="position: relative; top: 25px;">
+							<span style="color: rgb(72, 35, 116);">$\sigma/\sigma^{\ast} = 0.5$</span>
+							<video style="position: relative; left: 0%; width: 1200px;" controls loop>
+							 <source src="vid/vorticity_band_stress0.5cl.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<img src="img/flow_curve_phi0.58_PRE_stress0.5cl.png" style="border:0px; max-width:300px; position: absolute; left: 340px; top: 120px; box-shadow: none;">
+					</div>
+					<div class="fragment" style="font-size: 70%">
+						<div style="position: relative; top: 25px;">
+							<span style="color: rgb(41, 120, 142);">$\sigma/\sigma^{\ast} = 1$</span>
+							<video style="position: relative; left: 0%; width: 1200px;" controls loop>
+							 <source src="vid/vorticity_band_stress1cl.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<img src="img/flow_curve_phi0.58_PRE_stress1cl.png" style="border:0px; max-width:300px; position: absolute; left: 340px; top: 120px; box-shadow: none;">
+					</div>
+					<div class="fragment" style="font-size: 70%">
+						<div style="position: relative; top: 25px;">
+							<span style="color: rgb(68, 190, 112);">$\sigma/\sigma^{\ast} = 2$</span>
+							<video style="position: relative; left: 0%; width: 1200px;" controls loop>
+							 <source src="vid/vorticity_band_stress2cl.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<img src="img/flow_curve_phi0.58_PRE_stress2cl.png" style="border:0px; max-width:300px; position: absolute; left: 340px; top: 120px; box-shadow: none;">
+					</div>
+					<div class="fragment" style="font-size: 70%">
+						<div style="position: relative; top: 25px;">
+							<span style="color: rgb(194, 223,  34);">$\sigma/\sigma^{\ast} = 4$</span>
+							<video style="position: relative; left: 0%; width: 1200px;" controls loop>
+							 <source src="vid/vorticity_band_stress4cl.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<img src="img/flow_curve_phi0.58_PRE_stress4cl.png" style="border:0px; max-width:300px; position: absolute; left: 340px; top: 120px; box-shadow: none;">
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Comparison with model</h3>
+					<div style="position: relative; top: 0px; font-size: 70%; height: 300px;">
+						<div class="cleft" style="position: relative; left: 40px;">
+							<p>Stress field</p>
+							<video width=400 style="position: relative; left: 0%; top: -10px;" controls loop>
+							 <source src="vid/1Band_comparison_simu_model_stress.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<div class="cright">
+							<p>Friction field</p>
+							<video width=400 style="position: relative; left: 0%; top: -10px;" controls loop>
+							 <source src="vid/1Band_comparison_simu_model_f.mp4" type="video/mp4" />
+							</video>
+						</div>
+					</div>
+					<div class="fragment" style="position: relative; top: 0px; font-size: 70%;">
+						<p>Volume fraction field</p>
+							<video width=400 style="position: relative; left: 0%; top: -10px;" controls loop>
+							 <source src="vid/1Band_comparison_simu_model_phi.mp4" type="video/mp4" />
+							</video>
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Comparison with model</h3>
+					<div style="position: relative; top: 0px; font-size: 70%; height: 300px;">
+						<div class="cleft">
+							<p>Friction field</p>
+							<p class="vertical" style="position: absolute; top: 150px; left: -100px; color: #6FB65D">Simulation</p>
+							<img src="img/vorticity_band_f_3.png" style="border:0px; max-width:360px;">
+							<p class="vertical" style="position: absolute; top: 400px; left: -75px; color: #D77676FF">Model</p>
+							<img src="img/vorticity_band_f_4.35_model.png" style="border:0px; max-width:360px;">
+						</div>
+						<div class="cright">
+							<p>Stress field</p>
+							<img src="img/vorticity_band_stress_3.png" style="border:0px; max-width:360px;">
+							<img src="img/vorticity_band_stress_4.35_model.png" style="border:0px; max-width:360px;">
+						</div>						
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Comparison with model</h3>
+					<div style="position: relative; top: 0px; font-size: 70%; height: 300px;">
+						<div class="cleft">
+							<p>Friction field</p>
+							<p class="vertical" style="position: absolute; top: 150px; left: -100px; color: #6FB65D">Simulation</p>
+							<img src="img/vorticity_band_f_3_sampling.png" style="border:0px; max-width:360px;">
+							<p class="vertical" style="position: absolute; top: 400px; left: -75px; color: #D77676FF">Model</p>
+							<img src="img/vorticity_band_f_4.35_model_zoom.png" style="border:0px; max-width:360px;">
+						</div>
+						<div class="cright">
+							<p>Volume fraction field</p>
+							<img src="img/vorticity_band_phi_3_sampling.png" style="border:0px; max-width:360px;">
+							<img src="img/vorticity_band_phi_4.35_model_zoom.png" style="border:0px; max-width:360px;">
+						</div>						
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Two-band state?</h3>
+					<div style="position: relative; top: 0px; font-size: 70%; height: 300px;">
+						<div class="cleft">
+							<p>Friction field</p>
+							<p class="vertical" style="position: absolute; top: 150px; left: -100px; color: #6FB65D">Simulation</p>
+							<img src="img/vorticity_band_f_5.png" style="border:0px; max-width:360px;">
+							<p class="vertical" style="position: absolute; top: 400px; left: -75px; color: #D77676FF">Model</p>
+							<img src="img/vorticity_band_f_8.7_model.png" style="border:0px; max-width:360px;">
+						</div>
+						<div class="cright">
+							<p>Strain rate</p>
+							<img src="img/rate_vs_strain_2Band_simu.png" style="border:0px; max-width:360px;">
+							<img src="img/rate_vs_strain_2Band_model.png" style="border:0px; max-width:360px;">
+						</div>						
+					</div>
+				</section>
+				<section>
+					<h3 class="title">Flow curves</h3>
+					<p>Model</p>
+					<img src="img/banded_flow_curve_model.png" style="border:0px; max-width:700px;">
+				</section>
+				<section>
+					<h3 class="title">Comparison with model</h3>
+					<p>Simulations</p>
+					<img src="img/banded_flow_curve_simu_N4000.png" style="border:0px; max-width:500px;">
+				</section>
+				<section>
+					<h3 class="title">Comparison with model</h3>
+					<p>Simulations</p>
+					<img src="img/banded_flow_curve_simu_N4000_N8000.png" style="border:0px; max-width:500px;">
+				</section>
+				<section>
+					<h3 class="title">Some open questions</h3>
+					<ul style="font-size: 70%; position: relative; top: 10px;">
+						<li> Two-band state in simulations? </li>
+						<li> Some simulation events not captured, role of "noise"?
+							<div style="height: 240px;">
+								<div class="cleft">
+									<img src="img/vorticity_band_f_2_sampling.png" style="border:0px; max-width:330px;">
+								</div>
+								<div class="cright">
+									<img src="img/vorticity_band_f_5_sampling.png" style="border:0px; max-width:330px;">
+								</div>
+							</div>
+						</li>
+						<li> Where are the rare, intermittent and chaotic regimes of experiments?
+							<div style="height: 190px;">
+								<div class="cleft3">
+									<img src="img/ST_instability_Hermes_periodic.png" style="border:0px; max-width:180px;">
+								</div>
+								<div class="cctr3">
+									<img src="img/ST_instability_Hermes_intermittent.png" style="border:0px; max-width:180px;">
+								</div>
+								<div class="cright3">
+									<img src="img/ST_instability_Hermes_chaos.png" style="border:0px; max-width:180px;">
+								</div>
+							</div>
+						</li>	
+						<li> Boundary conditions (free surfuce, imposed normal stress?)</li>
+					</ul>
+				</section>
+
+		<!-- APPENDIX -->
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: false,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// 	offline maths
+				math: {
+						mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+						// mathjax: '../mathjax/MathJax.js',
+						config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+				},
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					// MathJax
+         	{ src: 'plugin/math/math.js', async: true }
+				]
+
+			});
+
+		</script>
+
+	</body>
+</html>
